@@ -1,0 +1,17 @@
+<svg width="580" height="400" xmlns="http://www.w3.org/2000/svg">
+ <g>
+  <title>background</title> 
+  <g display="none" overflow="visible" y="0" x="0" height="100%" width="100%" id="canvasGrid">
+   <rect fill="url(#gridpattern)" stroke-width="0" y="0" x="0" height="100%" width="100%"/>
+  </g>
+ </g>
+ <g>
+  <title>Layer 1</title>
+  <ellipse stroke="#000" ry="129.499996" rx="146.000011" id="svg_1" cy="183.609366" cx="279.499996" stroke-width="29.5" fill="#fff"/>
+  <line stroke-linecap="null" stroke-linejoin="null" id="svg_2" y2="52.109375" x2="477.538458" y1="52.109375" x1="269.5" fill-opacity="null" stroke-opacity="null" stroke-width="23.5" stroke="#000" fill="none"/>
+  <ellipse stroke="#000" ry="12.705882" rx="13.499999" id="svg_4" cy="185.403493" cx="278.999999" fill-opacity="null" stroke-opacity="null" stroke-width="17.5" fill="none"/>
+  <line stroke="#000" stroke-linecap="null" stroke-linejoin="null" id="svg_6" y2="355.109375" x2="442.501505" y1="355.109375" x1="118.499996" fill-opacity="null" stroke-opacity="null" stroke-width="26.5" fill="none"/>
+  <line stroke="#000" stroke-linecap="null" stroke-linejoin="null" id="svg_7" y2="285.109376" x2="204.500001" y1="355.109375" x1="126.5" fill-opacity="null" stroke-opacity="null" stroke-width="26.5" fill="none"/>
+  <line stroke-linecap="null" stroke-linejoin="null" id="svg_8" y2="353.109375" x2="433.5" y1="286.109375" x1="364.5" fill-opacity="null" stroke-opacity="null" stroke-width="26.5" stroke="#000" fill="none"/>
+ </g>
+</svg>

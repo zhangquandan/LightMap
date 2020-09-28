@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>lightmap地图嵌入开发JS接口示例</title>
+
+    <style>
+        * {
+            margin: 0;
+
+        }
+
+        .wrap {
+            width: 100%;
+            height: 100%;
+        }
+
+        .left,
+        .right {
+            margin-bottom: -100000px;
+            /*数值随便设置,越大越好,也就是(-padding-bottom值)*/
+            padding-bottom: 100000px;
+            /*数值随便设置,越大越好*/
+        }
+
+        .left {
+            width: 40%;
+            float: left;
+
+        }
+
+        .right {
+            width: 60%;
+            float: right;
+
+        }
+    </style>
+    <script type="text/javascript">
+        //1
+        function ViewLocation(location) {
+            // console.log(document.getElementById("mapiframe").contentWindow);
+            document.getElementById("mapiframe").contentWindow.Window.ViewLocation(location);
+
+        }
+        //2
+        function RefreshMap() {
+            document.getElementById("mapiframe").contentWindow.Window.RefreshMap();
+        }
+        // 3、地图选择事件的要素ID（地图子页面事件OnMapFeatureSelected）  
+        window.onload = function () {
+            document.getElementById("mapiframe").contentWindow.addEventListener('OnMapFeatureSelected',
+                function (event) {
+                    // alert('子页面事件选中地图要素ID：' + event.detail.featureid);
+                    console.log(event.detail);
+                    document.getElementById("eventFeatureID").innerText = event.detail.featureid;
+                });
+        }
+
+        // 4、直接获取地图选择要素ID（子页面全局变量MapSelectedFeatureID）  
+        function GetFeatureID() {
+            var SelectFeatureID = document.getElementById("mapiframe").contentWindow.Window.GetSelectedFeatureID();
+            let f = document.getElementById("mapiframe").contentWindow.Window.GetSelectedFeature();
+            console.log(f);
+            document.getElementById("getFeatureID").innerText = SelectFeatureID;
+        }
+
+    </script>
+
+    <script type="text/javascript">
+        //5、
+        //查询并定位地图上的设施（包括建筑），所选中的设施在地图上居中显示，颜色变为红色， featureid为建筑ID
+        //注：函数名和iframe名称可自行定义，但是ToSelectFeature为地图页面JS函数，不许改变
+        function SelectFeatureID(featureid) {
+            document.getElementById("mapiframe").contentWindow.Window.ToSelectFeature(featureid);
+        }
+        //6
+        function ShowFeatureMsg(featureid, msg) {
+            document.getElementById("mapiframe").contentWindow.Window.ShowFeatureMsg(featureid, msg);
+        }
+        //7
+        function LocationMsg(location, msg) {
+            document.getElementById("mapiframe").contentWindow.Window.LocationMsg(location, msg);
+        }
+        //8
+        function Showbuildingswater() {
+            let buildingswaterjson = '{"BuildingWater":[{"FeatureID":"building.55","Quantity":60},{"FeatureID":"building.52","Quantity":87},{"FeatureID":"building.51","Quantity":0},{"FeatureID":"building.53","Quantity":34},{"FeatureID":"building.54","Quantity":98}]}'
+            document.getElementById("mapiframe").contentWindow.Window.Showbuildingswater(buildingswaterjson);
+        }
+        //9
+        function GetCoordinate() {
+            var coord = document.getElementById("mapiframe").contentWindow.Window.GetLastMarkerCoordinate();
+            document.getElementById("txtgetcoord").innerText = coord;
+
+        }
+        function ShowLightMapTitle() {
+            var coord = document.getElementById("mapiframe").contentWindow.Window.ShowMapTitle();
+        }
+
+        function HideLightMapTitle() {
+            var coord = document.getElementById("mapiframe").contentWindow.Window.HideMapTitle();
+        }
+        function SetLightMapTitle(title) {
+            var coord = document.getElementById("mapiframe").contentWindow.Window.SetMapTitle(title);
+        }
+
+        function drawpoints() {
+
+            let pointsjson = '{"points": [{"pid":"001","category": "WaterLostPoint","location": [114.3851,30.5059],"radius": 10,"label": "P001","color": "gray"}, {"pid":"002","category": "WaterLostPoint","location": [114.3855,30.5047],"radius": 12,"label": "P002","color": "red"}, {"pid":"003","category": "WaterLostPoint","location": [114.3856,30.509],"radius": 30,"label": "P003","color": "yellow"}, {"pid":"004","category": "WaterLostPoint","location": [114.3857,30.5086],"radius": 20,"label": "P004","color": "red"}, {"pid":"005","category": "WaterLostPoint","location": [114.3861,30.5085],"radius": 15,"label": "P005","color": "blue"}]}'
+            document.getElementById("mapiframe").contentWindow.Window.Drawpoints(pointsjson);
+
+        }
+
+
+    </script>
+
+    <script>
+
+        function login(callbackviewmap) {
+            //geoserver服务端验证url
+            var geoserverurl = "http://localhost:8080/geoserver/j_spring_security_check";
+            var myHeaders = new Headers();
+            myHeaders.append("Content-Type", "application/x-www-form-urlencoded");
+            //用户名密码
+            let username = "whit";
+            let password = "whit123";
+            var urlencoded = new URLSearchParams();
+            urlencoded.append("username", username);
+            urlencoded.append("password", password);
+
+            var requestOptions = {
+                method: 'POST',
+                headers: myHeaders,
+                body: urlencoded,            
+                credentials: 'include',
+            };
+            fetch(geoserverurl, requestOptions)
+                .then(function (response) {
+                    console.log(response.status);
+                    if (response.status == 200) {
+                        //写入cookie                      
+                        document.cookie = "username=" + username + ";path=/";                     
+                        //创建并添加lightmap的iframe到div
+                        let divmapiframe = document.getElementById("divmapiframe");
+                        divmapiframe.innerHTML = "";
+                        let mapiframe = document.createElement("iframe");
+                        mapiframe.id = "mapiframe";
+                        //lightmap网址
+                        mapiframe.src = "http://localhost:8080/lightmapv5/index.html";
+                        mapiframe.style.width = "100%";
+                        mapiframe.style.height = "100%";
+                        mapiframe.style.minHeight = "600px";
+                        scrolling = "yes";
+                        divmapiframe.appendChild(mapiframe);
+                    }
+                    return response.text();
+                })
+                .then(function (result) {
+                })
+                .catch(error => console.log('error', error));
+        }
+
+    </script>
+</head>
+
+
+<body>
+    <div class="wrap">
+        <div class="left">
+            <p>0、地图登录并嵌入地图
+                <button onclick="login()"> 地图登录并嵌入地图</button>
+            </p>
+            <p>
+                1、地图居中
+                <input type="text" id="myCoord" value="114.3850,30.5048" />
+                <button onclick="ViewLocation(myCoord.value)">地图居中</button>
+            </p>
+            <p> 2、清理地图
+                <button onclick="RefreshMap()">清理地图</button>
+            </p>
+            <p>
+                3、地图选择事件的要素ID（地图子页面事件）：
+                <span id="eventFeatureID"></span>
+            </p>
+            <p>
+                4、直接获取地图选择要素ID（子页面全局变量）：
+                <span id="getFeatureID"></span>
+                <button onclick="GetFeatureID()">获取要素ID（控制台查看要素属性信息）</button>
+
+            </p>
+            <p>
+                5、根据地图要素ID定位显示到该要素（建筑、区域、管线、管点四个图层）:
+                <input type="text" id="txtFeatureID" name="txtFeatureID" value="building.55" />
+                <button onclick="SelectFeatureID(txtFeatureID.value)">选择</button>
+            </p>
+            <p>
+                6、 在地图要素上显示气泡文字（根据要素ID和文字内容）:
+                <input type="text" id="txtFeatureMsgID" name="txtFeatureMsgID" value="building.55" /> 标注文字
+                <input type="text" id="txtFeatureMsg" name="txtFeatureMsg" value="这是一栋建筑" />
+                <button onclick="ShowFeatureMsg(txtFeatureMsgID.value,txtFeatureMsg.value)">要素上显示文字</button>
+            </p>
+            <p>
+                7、 坐标显示文字 坐标:
+                <input type="text" id="txtCoord" name="txtCoord" value="114.38501,30.50498" /> 标注文字：
+                <input type="text" id="txtMsg" name="txtMsg" value="这是一个水表" />
+
+                <button onclick="LocationMsg(txtCoord.value,txtMsg.value)">坐标位置上显示文字</button>
+            </p>
+            <p>
+                8、 显示所有建筑用水量(buildingswaterjson为建筑要素ID和用水量数值):
+                <button onclick="Showbuildingswater()">建筑用水量</button>
+            </p>
+            <p>
+                9、 获取坐标点:
+                <button onclick="GetCoordinate()">获取坐标
+                </button>
+                <span>:</span> <span id="txtgetcoord"> </span>
+            </p>
+            <p>
+                10、
+                <button onclick="ShowLightMapTitle()">显示标题 </button>
+            </p>
+            <p> 11、
+                <button onclick="HideLightMapTitle()">隐藏标题 </button>
+            </p>
+            <p> 12、
+                <button onclick="SetLightMapTitle(txtTitle.value)">设置标题 </button>
+                <input type="text" id="txtTitle" value="漏水探测点分布图" />
+
+            </p>
+            <p> 13、
+                <button onclick="drawpoints()">绘制指定颜色和半径的圆（点） </button>
+
+            </p>
+        </div>
+        <div class="right" id="divmapiframe">
+            <!--地图网站，ID为可自行定义，必须和js函数中调用的id一致-->
+            <iframe id="mapiframe" src="http://localhost:8080/lightmapv5/index.html" width="860" height="550"
+                scrolling="yes" />
+        </div>
+    </div>
+
+
+</body>
+
+</html>

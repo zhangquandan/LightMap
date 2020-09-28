@@ -1,0 +1,173 @@
+
+ 
+
+#divlogin {
+    position: fixed;
+    background: url(./loginbg.jpg) no-repeat;
+    background-size: 100%;
+    width: 100%;
+    height: 100%;
+}
+
+.bg1 {
+    width: 100%;
+    height: 237px;
+    background: #347ebc;
+    opacity: 0.6;
+    position: absolute;
+    left: 0;
+    top: 0px;
+    right: 0px;
+    bottom: 0px;
+    margin: auto;
+}
+
+.gyl {
+    width: 600px;
+    height: 248px;
+    color: #FFFFFF;
+    font-size: 72px;
+    position: absolute;
+    left: 10%;
+    top: 10%;
+
+    bottom: 0px;
+    margin: auto;
+}
+
+.gy2 {
+    color: #fff;
+    margin-left: 6px;
+    font-size: 18px;
+    text-align: center;
+    margin-top: 10px;
+}
+
+.bg {
+    width: 375px;
+    height: 337px;
+    background: #fff;
+    /* position: relative; */
+    position: absolute;
+    left: 40%;
+    top: 0px;
+    right: 0px;
+    bottom: 0px;
+    margin: auto;
+    z-index: 1;
+    box-shadow: 0px 0px 50px rgba(0, 0, 0, 0.4);
+    border-radius: 5px;
+}
+
+.password {
+    position: absolute;
+    top: 9.5rem;
+    right: 2.5rem;
+    display: flex;
+}
+
+.btn {
+    position: absolute;
+    height: 50px;
+    top: 16rem;
+    right: 2.5rem;
+    border: none;
+    color: #fff;
+    width: 18.825rem;
+    text-align: center;
+    background-color: #347ebc;
+    text-indent: 0rem;
+}
+
+.img {
+    width: 100%;
+    position: absolute;
+    left: 0;
+    right: 0;
+    margin: 0 auto;
+    z-index: -1;
+}
+
+.wel {
+    width: 375px;
+    height: 35px;
+    color: #347ebc;
+    font-size: 1.5rem;
+    position: absolute;
+    top: 2rem;
+    text-align: center;
+}
+
+.userinput {
+    border: 0px;
+    border-bottom: 1px solid #347ebc;
+    height: 39px;
+    width: 15.8125rem;
+    text-indent: 2.125rem;
+
+
+}
+
+.userinput:-webkit-autofill  {
+    -webkit-text-fill-color: #525151 !important;
+    box-shadow: 0 0 0px 1000px white inset !important;
+    background-color: transparent;
+    background-image: none;
+    transition: background-color 50000s ease-in-out 0s;
+}
+
+
+.userinput :focus {
+    border: 0px 0px 1px 0px solid #347ebc;
+}
+
+
+.user {
+    position: absolute;
+    top: 6rem;
+    right: 2.5rem;
+    display: flex;
+
+}
+
+
+.divinfo {
+    position: absolute;
+    top: 12.5rem;
+    left: 1.5rem;
+    border: none;
+
+}
+
+.divinfo span {
+    width: 300px;
+    color: red;
+}
+
+.fg {
+    position: absolute;
+    top: 12.5rem;
+    right: 2.5rem;
+    border: none;
+    color: #323333;
+}
+
+#yonghu {
+    border-bottom: 1px solid #347ebc;
+    height: 41px;
+    line-height: 41px;
+}
+
+#reb {
+    margin-top: -33px;
+    margin-left: 20px;
+    font-size: 11px;
+}
+#divlogin {
+    position: absolute;
+    width: 95%;
+    height: 95%;
+    vertical-align: middle;
+    align-content: center;
+    background-color: #7557fc5e;
+}

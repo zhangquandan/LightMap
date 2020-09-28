@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>地图开发url接口示例</title>
+    <script>
+        function viewbuildingwater() {
+            let uu = 'http://localhost:8080/lightmapv5/index.html?type=iframe&Showbuildingswater='
+            let bwater = '{"BuildingWater":[{"FeatureID":"building.59","Quantity":60},{"FeatureID":"building.47","Quantity":87},{"FeatureID":"building.9","Quantity":0},{"FeatureID":"building.86","Quantity":34},{"FeatureID":"building.85","Quantity":98}]}';
+            let aa = uu + bwater;
+            let bb = encodeURI(aa);
+            window.location.href = bb;
+
+        }
+        function drawpoints() {
+            let uu = 'http://localhost:8080/lightmapv5/index.html?type=iframe&drawpoints=';
+            let points = '{"points": [{"pid":"001","category": "WaterLostPoint","location": [114.3851,30.5059],"radius": 10,"label": "P001","color": "gray"}, {"pid":"002","category": "WaterLostPoint","location": [114.3855,30.5047],"radius": 12,"label": "P002","color": "red"}, {"pid":"003","category": "WaterLostPoint","location": [114.3856,30.509],"radius": 30,"label": "P003","color": "yellow"}, {"pid":"004","category": "WaterLostPoint","location": [114.3857,30.5086],"radius": 20,"label": "P004","color": "red"}, {"pid":"005","category": "WaterLostPoint","location": [114.3861,30.5085],"radius": 15,"label": "P005","color": "blue"}]}'
+
+            let aa = uu + points;
+            let bb = encodeURI(aa);
+            window.location.href = bb;
+        }
+
+    </script>
+</head>
+
+
+<body>
+    <h2>地图调用方法Demo</h2>
+    <div>
+        <a
+            href="http://localhost:8080/lightmapv5/index.html?type=iframe">1、调用地图&emsp;&emsp;http://localhost:8080/lightmapv5/index.html?type=iframe</a><br />
+        <a href="http://localhost:8080/lightmapv5/index.html?type=iframe&ViewLocation=114.3810,30.5048">
+            2、地图居中到指定坐标位置&emsp;&emsp;http://localhost:8080/lightmapv5/index.html?type=iframe&ViewLocation=114.3810,30.5048</a><br />
+        <a href="http://localhost:8080/lightmapv5/index.html?type=iframe&ToSelectFeature=building.88">
+            3、地图要素ID定位&emsp;&emsp;http://localhost:8080/lightmapv5/index.html?type=iframe&ToSelectFeature=building.88</a><br />
+        <a href="http://localhost:8080/lightmapv5/index.html?type=iframe&ShowFeatureMsg=building.85;AAA">
+            4、在地图要素上显示信息&emsp;&emsp;http://localhost:8080/lightmapv5/index.html?type=iframe&ShowFeatureMsg=building.85;AAA</a><br />
+        <a href="http://localhost:8080/lightmapv5/index.html?type=iframe&LocationMsg=114.3850,30.5048;BBB">
+            5、在坐标位置显示信息&emsp;&emsp;http://localhost:8080/lightmapv5/index.html?LocationMsg=114.3850,30.5048;BBB</a><br />
+        <a href='#' onclick="viewbuildingwater()"> 6、显示建筑用水量 </a><br />
+        <div>
+            <textarea style="width: 100%;height:400px;">
+                    onclick="viewbuildingwater()"
+                    脚本（建筑水量集合 -建筑水量对象包含建筑ID——FeatureID和水量Quantity，  本方法url传递json参数进行encodeURI处理）：
+                    function viewbuildingwater() {
+                        let aa = 'http://localhost:8080/lightmapv5/index.html?type=iframe&Showbuildingswater={"BuildingWater":[{"FeatureID":"building.59","Quantity":60},{"FeatureID":"building.47","Quantity":87},{"FeatureID":"building.9","Quantity":0},{"FeatureID":"building.86","Quantity":34},{"FeatureID":"building.85","Quantity":98}]}'
+                        let bb = encodeURI(aa);
+                        window.location.href=bb;
+            
+                    }
+
+                    json:
+
+                    {
+                        "BuildingWater": [{
+                            "FeatureID": "building.59",
+                            "Quantity": 60
+                        }, {
+                            "FeatureID": "building.47",
+                            "Quantity": 87
+                        }, {
+                            "FeatureID": "building.9",
+                            "Quantity": 0
+                        }, {
+                            "FeatureID": "building.86",
+                            "Quantity": 34
+                        }, {
+                            "FeatureID": "building.85",
+                            "Quantity": 98
+                        }]
+                    }
+            </textarea>
+        </div>
+        <br />
+       
+
+        <a href='#' onclick="drawpoints()"> 7、绘制点（用于漏耗点显示、维修点状态） </a><br />
+        <div>
+            <textarea style="width: 100%;height:400px;">
+
+                    脚本(点数组-点对象包含坐标location和颜色color) 本方法url传递json参数进行encodeURI处理：
+                    function drawpoints() {
+                        let uu = 'http://localhost:8080/lightmapv5/index.html?type=iframe&drawpoints=';
+                        let points = '{"points": [{"pid":"001","category": "WaterLostPoint","location": [114.3851,30.5059],"radius": 10,"label": "P001","color": "gray"}, {"pid":"002","category": "WaterLostPoint","location": [114.3855,30.5047],"radius": 12,"label": "P002","color": "red"}, {"pid":"003","category": "WaterLostPoint","location": [114.3856,30.509],"radius": 30,"label": "P003","color": "yellow"}, {"pid":"004","category": "WaterLostPoint","location": [114.3857,30.5086],"radius": 20,"label": "P004","color": "red"}, {"pid":"005","category": "WaterLostPoint","location": [114.3861,30.5085],"radius": 15,"label": "P005","color": "blue"}]}'
+            
+                        let aa = uu + points;
+                        let bb = encodeURI(aa);
+                        window.location.href = bb;
+                    }
+            
+
+                    点数组json:
+                    {
+                        "points": [{
+                            "pid": "001",
+                            "category": "WaterLostPoint",
+                            "location": [114.3851, 30.5059],
+                            "radius": 10,
+                            "label": "P001",
+                            "color": "gray"
+                        }, {
+                            "pid": "002",
+                            "category": "WaterLostPoint",
+                            "location": [114.3855, 30.5047],
+                            "radius": 12,
+                            "label": "P002",
+                            "color": "red"
+                        }, {
+                            "pid": "003",
+                            "category": "WaterLostPoint",
+                            "location": [114.3856, 30.509],
+                            "radius": 30,
+                            "label": "P003",
+                            "color": "yellow"
+                        }, {
+                            "pid": "004",
+                            "category": "WaterLostPoint",
+                            "location": [114.3857, 30.5086],
+                            "radius": 20,
+                            "label": "P004",
+                            "color": "red"
+                        }, {
+                            "pid": "005",
+                            "category": "WaterLostPoint",
+                            "location": [114.3861, 30.5085],
+                            "radius": 15,
+                            "label": "P005",
+                            "color": "blue"
+                        }]
+                    }
+            </textarea>
+        </div>
+        <br />
+
+    </div>
+
+</body>
+
+</html>

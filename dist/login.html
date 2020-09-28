@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="./login/login.css" rel="stylesheet" type="text/css" charset="utf-8" />
+    <title>Document</title>
+</head>
+
+<body>
+    <div id='divlogin' style="display: block;">
+        <div class="bg1"></div>
+        <div class="gyl">
+            <div style="align-content: center;display: block;">
+                <div style="display: inline-block;vertical-align: middle;margin-right: 15px;">
+                    <img style="height: 80px;" src='./login/loginlogo.png' />
+                </div>
+                <div style="vertical-align: middle;display: inline-block;">
+                    <h1 id='OrganizationName' align="center" style="color: yellow;font-size: 40px;font-weight: bolder;">
+                        武汉工程大学</h1>
+
+                    <h2 id="SystemName" align="center" style="color: yellow;font-size: 24px;"> 智慧供水管网信息平台 </h2>
+                </div>
+            </div>
+        </div>
+        <div class="bg">
+            <div class="wel">用户登录</div>
+            <div>
+                <div class="user">
+                    <div id="yonghu">用户名&nbsp;&nbsp;</div>
+                    <input class="userinput" type="text" id="username" autocomplete="off" />
+                </div>
+                <div class="password">
+                    <div id="yonghu">密&nbsp;&nbsp;&nbsp;码&nbsp;&nbsp;</div>
+                    <input class="userinput" type="text" id="password" autocomplete="off"
+                        onfocus='setAttribute("type","password"); ' />
+                </div>
+            </div>
+            <div class="divinfo">
+                <span id="longininfo"></span>
+
+            </div>
+
+            <input class="btn" type="button" name="登录" value="登录" id="btnLogin" onclick="login()" />
+        </div>
+    </div>
+    <script src="config.js" charset="utf-8"></script>
+    <script>
+        /*
+        console.log("登录窗口:");
+        console.log(config.AppUrl);
+        console.log(config.AppLoginUrl);
+        console.log(config.AppGeoServerj_spring_security_checkUrl);
+        */
+        document.title = config.Title;
+        document.getElementById('SystemName').innerText = config.SystemName;
+        document.getElementById('OrganizationName').innerText = config.OrganizationName;
+
+        function login() {
+            var username = document.getElementById("username").value;
+            var password = document.getElementById("password").value;
+
+            //var geoserverurl = "http://localhost:8080/geoserver/j_spring_security_check";
+            var geoserverurl = config.AppGeoServerj_spring_security_checkUrl;
+            //headers.append('Content-Type', 'text/json');
+            var data = {
+                username: username,
+                password: password
+            };
+            console.log(data.password);
+
+
+            var myHeaders = new Headers();
+            myHeaders.append("Content-Type", "application/x-www-form-urlencoded");
+            // myHeaders.append("Cookie", "JSESSIONID=1AB965E975A6D6EF958CF347582043D6");
+
+            var urlencoded = new URLSearchParams();
+            urlencoded.append("username", username);
+            urlencoded.append("password", password);
+
+            var requestOptions = {
+                method: 'POST',
+                headers: myHeaders,
+                body: urlencoded,
+                redirect: 'follow',
+                credentials: 'include',
+            };
+            deleteCookie("username");
+
+            fetch(geoserverurl, requestOptions)
+                .then(function (response) {
+                    console.log(response.status);
+                    if (response.status == 200) {
+                        // document.getElementById("longininfo").innerHTML = '';
+                        // runmap();
+                        // window.history.back();
+                        // var qs = getQueryString();
+                        // setCookie("username", username);
+                        document.cookie = "username=" + username;
+                        /* var qsfrom = qs["from"]; // abc
+                        if (qsfrom == "geoserver")
+                            window.location.href = "http://localhost:8080/geoserver/";
+                        else  
+                            // window.location.href = "http://localhost:8080/lightmapv5/index.html?status=logined";
+                            */
+                        //window.location.href = "http://localhost:8080/lightmapv5/index.html";
+                        window.location.href = config.AppUrl;
+                    }
+                    else {
+                        document.getElementById("longininfo").innerHTML = '提示：错误的用户名或密码';
+                    }
+                    return response.text()
+                })
+                .then(function (result) {
+
+                })
+                .catch(error => console.log('error', error));
+        }
+
+        function getQueryString() {
+            var qs = location.search.substr(1), // 获取url中"?"符后的字串  
+                args = {}, // 保存参数数据的对象
+                items = qs.length ? qs.split("&") : [], // 取得每一个参数项,
+                item = null,
+                len = items.length;
+
+            for (var i = 0; i < len; i++) {
+                item = items[i].split("=");
+                var name = decodeURIComponent(item[0]),
+                    value = decodeURIComponent(item[1]);
+                if (name) {
+                    args[name] = value;
+                }
+            }
+            return args;
+        }
+
+        function getCookie(cname) {
+            var name = cname + "=";
+            var decodedCookie = decodeURIComponent(document.cookie);
+            var ca = decodedCookie.split(';');
+            for (var i = 0; i < ca.length; i++) {
+                var c = ca[i];
+                while (c.charAt(0) == ' ') {
+                    c = c.substring(1);
+                }
+                if (c.indexOf(name) == 0) {
+                    return c.substring(name.length, c.length);
+                }
+            }
+            return "";
+        }
+        function setCookie(cname, cvalue, exdays) {
+            var d = new Date();
+            d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
+            var expires = "expires=" + d.toUTCString();
+            document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+        }
+
+        function deleteCookie(cname) {
+            document.cookie = cname + "=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+        }
+
+
+        document.getElementById("username").focus();
+        // 回车提交表单， 兼容FF和IE和Opera
+        document.onkeydown = function (e) {
+            var theEvent = window.event || e;
+            var code = theEvent.keyCode || theEvent.which || theEvent.charCode;
+            if (code == 13) {
+                login();
+            }
+        }
+
+
+
+    </script>
+</body>
+
+</html>

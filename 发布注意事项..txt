@@ -1,0 +1,7 @@
+1、在项目根目录下运行npm run build,在dist生成发布文件；
+2、将login和symbols目录，以及config.js、login.html文件复制到dist文件夹；
+3、修改dist中的index.html中config.js的路径，去掉http的绝对路径：
+     原index.html:
+	<!Doctype html><head><script src="http://localhost:8080/lightmapv5/config.js" charset="utf-8"></script> .......
+     修改为
+	<!Doctype html><head><script src="config.js" charset="utf-8"></script> .......

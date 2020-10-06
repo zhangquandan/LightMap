@@ -40,6 +40,7 @@ let map = new Map({ target: 'map', });
 
 function main(map) {
 
+    document.cookie = "username=1;path=/";
     //地图 
     //设置地图显示
     map.setView(mapfactory.Getdefaultview());

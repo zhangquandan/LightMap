@@ -20,7 +20,7 @@ let config = {
     Title: _OrganizationName + _SystemName,
 
     //系统未操作未使用待机时间（默认5分钟，超过该时间重新登录）
-    SleepLoginMinutes: 50 * 60 * 1000,
+    SleepLoginMinutes: 24 * 60 * 60 * 1000,
 
     //地图geoserver的WFS服务url接口
     // wfsurl: 'http://' + location.host + '/geoserver/pggis/wfs',
